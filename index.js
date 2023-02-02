@@ -23,6 +23,24 @@ app.get("/", function (req, res) {
 app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
+app.get("/api/:paramaterEntrance?", function(req, res) {
+  const paramaterEntrance = req.params.paramaterEntrance;
+  let resDate;
+
+
+  if (!paramaterEntrance) {
+    resDate = new Date();
+  } else {
+    resDate = !isNaN(paramaterEntrance) ? new Date(parseInt(paramaterEntrance)) : new Date(paramaterEntrance);
+  }
+
+  if (resDate.toString() === "Invalid Date") {
+    res.json({ error: resDate.toString() });
+  } else {
+    res.json({ unix: resDate.getTime(), utc: resDate.toUTCString() });
+  }
+
+});
 
 
 
